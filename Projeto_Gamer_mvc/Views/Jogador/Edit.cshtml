@@ -1,0 +1,53 @@
+@model Jogador
+
+@{
+    ViewData["Title"] = "Editar";
+}
+
+<link rel="stylesheet" href="~/css/jogadores.css">
+
+<!-- MAIN -->
+<main>
+
+    <section class="container-grid cadastro-equipes">
+
+        @if (ViewBag.UserName == null)
+        {
+            <a class="navbar-brand" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
+        }
+        else
+        {
+            <form method="post" action="@Url.Action("Atualizar")" class="frm-cad-equipe">
+                <input type="hidden" name="IdJogador" value="@ViewBag.Jogador.IdJogador">
+
+                <div class="cadequipe-titulo">
+                    <h1>Cadastro de Jogadores</h1>
+                    <hr>
+                </div>
+
+                <input class="campo-entrada" type="text" id="nome-jogador" name="Nome" value="@ViewBag.Jogador.Nome" required placeholder="Insira o nome do jogador...">
+                <input class="campo-entrada" type="email" id="email-jogador" name="Email" value="@ViewBag.Jogador.Email" required placeholder="Insira o email do jogador...">
+                <input class="campo-entrada" type="password" id="senha" name="Senha" value="@ViewBag.Jogador.Senha" required placeholder="Insira a senha do jogador...">
+                
+                <select class="campo-entrada" type="number" id="id-equipe" name="IdEquipe">
+                    <option value="0">Selecione uma equipe: </option>
+
+                    @foreach (Equipe equipe in ViewBag.Equipe)
+                    {
+                        @if (equipe.IdEquipe == ViewBag.Jogador.IdEquipe)
+                        {
+                            <option value="@ViewBag.Jogador.IdEquipe" selected>@equipe.Nome</option>
+                        }
+                        else
+                        {
+                            <option value="@equipe.IdEquipe">@equipe.Nome</option>
+                        }
+                    }
+                </select>
+                
+                <button>Cadastrar</button>
+            </form>
+        }
+
+    </section>
+</main>
